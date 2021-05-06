@@ -44,9 +44,9 @@ const crypto = require("crypto");
 exports.sourceNodes = async ({ actions }) => {
   const { createNode } = actions;
 
-  // fetch raw data from the randomuser api
+  // fetch raw data from the api
   const fetchTeamData = () =>
-    axios.get(`https://stats.foldingathome.org/api/team/252349`);
+    axios.get(`https://api2.foldingathome.org/team/252349`);
   // await for results
   const res = await fetchTeamData();
 

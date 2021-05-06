@@ -2,7 +2,7 @@ import React from "react";
 import { StaticQuery, graphql, Link } from "gatsby";
 import Alert from "react-bootstrap/Alert";
 import Card from "react-bootstrap/Card";
-import CardColumns from "react-bootstrap/CardColumns";
+import CardDeck from "react-bootstrap/CardDeck";
 
 export default () => (
   <StaticQuery
@@ -18,18 +18,12 @@ export default () => (
         }
         teamData {
           raw_data {
-            wus
+            founder
+            id
             rank
-            total_teams
-            last
-            credit
-            donors {
-              name
-              credit
-              rank
-              id
-              wus
-            }
+            name
+            score
+            wus
           }
         }
       }
@@ -60,75 +54,40 @@ export default () => (
           </p>
         </Alert>
         <Alert variant="info">
-          The following data came from the Folding@Home api, refreshes every 5
-          minutes.
+          The following data came from the Folding@Home api, refreshes every
+          day.
         </Alert>
-        <CardColumns>
+        <CardDeck>
           <Card bg="info">
             <Card.Header>Team</Card.Header>
             <Card.Body>
               <Card.Title>Rank</Card.Title>
               <Card.Text>
-                We are currently rank {data.teamData.raw_data.rank} out of a
-                total of {data.teamData.raw_data.total_teams} teams.
+                We are currently rank {data.teamData.raw_data.rank}.
               </Card.Text>
             </Card.Body>
           </Card>
+          <br />
           <Card bg="info">
             <Card.Header>Team</Card.Header>
             <Card.Body>
               <Card.Title>Work Units</Card.Title>
               <Card.Text>
-                We completed a total of {data.teamData.raw_data.wus} work units.
+                We completed a total of {data.teamData.raw_data.wus} work units. The score is {data.teamData.raw_data.score}.
               </Card.Text>
             </Card.Body>
           </Card>
+          <br />
           <Card bg="info">
             <Card.Header>Team</Card.Header>
             <Card.Body>
-              <Card.Title>Last Active Machine</Card.Title>
+              <Card.Title>Information</Card.Title>
               <Card.Text>
-                {data.teamData.raw_data.last} is the last time a machine was
-                active.
+                The team is called {data.teamData.raw_data.name}. Our founder is {data.teamData.raw_data.founder}, and our team number is {data.teamData.raw_data.id}.
               </Card.Text>
             </Card.Body>
           </Card>
-          <Card bg="info">
-            <Card.Header>Team</Card.Header>
-            <Card.Body>
-              <Card.Title>Total Credit Earned</Card.Title>
-              <Card.Text>
-                We earned a total of {data.teamData.raw_data.credit} credit.
-              </Card.Text>
-            </Card.Body>
-          </Card>
-          {data.teamData.raw_data.donors.map((donor) => {
-            const wusPercent =
-              Math.round(donor.wus / data.teamData.raw_data.wus) * 100;
-            return (
-              <Card bg="primary">
-                <Card.Header>Team Member</Card.Header>
-                <Card.Body>
-                  <Card.Title>{donor.name}</Card.Title>
-                  <Card.Text>
-                    <div key={donor.id}>
-                      Global Rank: {donor.rank}
-                      <br />
-                      Credit: {donor.credit}
-                      <br />
-                      WUs: {donor.wus}
-                      <br />
-                      {wusPercent}% of the total work units.
-                    </div>
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            );
-          })}
-        </CardColumns>
-        <Link to="/contact" className="button -primary">
-          Get in touch &rarr;
-        </Link>
+        </CardDeck>
       </div>
     )}
   />
